@@ -4,7 +4,7 @@ import styles from './Auth.module.css';
 import teacherData from '../icons_logos/teacher.json';
 import Lottie from 'lottie-react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db, storage } from '/home/kali/Student_Analyzer/Student-Analyzer/src/firebaseConfig';// adjust path if needed
+import { auth, db, storage } from '../../Firebase_Config/firebaseConfig';// adjust path if needed
 import { getDoc, doc } from "firebase/firestore";
 
 const TeacherLogin = () => {

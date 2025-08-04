@@ -5,7 +5,7 @@ import teacherData from '../icons_logos/teacher.json';
 import Lottie from 'lottie-react';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import {auth ,db} from '/home/kali/Student_Analyzer/Student-Analyzer/src/firebaseConfig';
+import {auth ,db} from '../../Firebase_Config/firebaseConfig';
 
 const TeacherSignup = () => {
   const [formData, setFormData] = useState({

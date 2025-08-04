@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styles from './Auth.module.css';
 import studentData from '../icons_logos/lstudent.json';
 import Lottie from 'lottie-react';
-import { auth, db, storage } from '/home/kali/Student_Analyzer/Student-Analyzer/src/firebaseConfig';
+import { auth, db, storage } from '../../Firebase_Config/firebaseConfig';// adjust path if needed // adjust path if needed
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
