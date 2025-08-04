@@ -25,49 +25,114 @@ const TeacherSignup = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  function generateTeacherVerificationCode(name) {
+  if (!name) return null;
+
+  // Step 1: Convert each character to ASCII and apply position-based modification
+  let transformed = name
+    .toUpperCase() // Normalize the name
+    .split('')
+    .map((char, i) => char.charCodeAt(0) * (i + 1) ** 2) // Position-weighted ASCII
+    .reduce((acc, val) => acc + val, 0); // Sum of transformed values
+
+  // Step 2: Apply further complex transformation
+  transformed = Math.floor(Math.sqrt(transformed * 1234567)) + transformed % 997;
+
+  // Step 3: Convert to 6-digit number (always)
+  const code = (transformed % 900000) + 100000; // ensures it's between 100000–999999
+  return code;
+}
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
     
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+  //   if (formData.password !== formData.confirmPassword) {
+  //     setError('Passwords do not match');
+  //     return;
+  //   }
+    
+  //   setIsLoading(true);
+  //   setError('');
+    
+  //   try {
+  //     // In a real app, you would send this data to your backend
+  //     console.log('Teacher signup data:', formData);
+  //      const userCredential = await createUserWithEmailAndPassword(auth, formData.email.trim(), formData.password.trim());
+      
+      
+  //         // 2. Get the user UID
+  //         const userId = userCredential.user.uid;
+
+  //         await setDoc(doc(db, "teachers", userId), {
+  //               name: formData.name,
+  //               email: formData.email,
+  //               teacherId: formData.teacherId,
+  //               createdAt: new Date(),
+  //               role: "teachers",
+  //             });
+      
+  //             // await new Promise(resolve => setTimeout(resolve, 1000));
+  //     // Simulate API call
+  //     // navigate("/student-login");
+  //     // For demo purposes, we'll just check if fields are filled
+  //     if (formData.name && formData.email && formData.password && formData.teacherId) {
+  //       navigate('/student-login');
+  //     } else {
+  //       setError('Please fill in all required fields');
+  //     }
+  //   } catch (err) {
+  //     setError('Registration failed. Please try again.');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+
+  setIsLoading(true);
+  setError('');
+
+  try {
+    // ✅ Validate teacher ID
+    const expectedTeacherId = generateTeacherVerificationCode(formData.name);
+    if (formData.teacherId !== expectedTeacherId.toString()) {
+      setError('Invalid Teacher ID. Please contact admin.');
+      setIsLoading(false);
       return;
     }
-    
-    setIsLoading(true);
-    setError('');
-    
-    try {
-      // In a real app, you would send this data to your backend
-      console.log('Teacher signup data:', formData);
-       const userCredential = await createUserWithEmailAndPassword(auth, formData.email.trim(), formData.password.trim());
-      
-      
-          // 2. Get the user UID
-          const userId = userCredential.user.uid;
 
-          await setDoc(doc(db, "teachers", userId), {
-                name: formData.name,
-                email: formData.email,
-                teacherId: formData.teacherId,
-                createdAt: new Date(),
-                role: "teachers",
-              });
-      
-              // await new Promise(resolve => setTimeout(resolve, 1000));
-      // Simulate API call
-      // navigate("/student-login");
-      // For demo purposes, we'll just check if fields are filled
-      if (formData.name && formData.email && formData.password && formData.teacherId) {
-        navigate('/student-login');
-      } else {
-        setError('Please fill in all required fields');
-      }
-    } catch (err) {
-      setError('Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      formData.email.trim(),
+      formData.password.trim()
+    );
+
+    const userId = userCredential.user.uid;
+
+    await setDoc(doc(db, "teachers", userId), {
+      name: formData.name,
+      email: formData.email,
+      teacherId: formData.teacherId,
+      createdAt: new Date(),
+      role: "teachers",
+    });
+
+    navigate('/teacher-login');
+  } catch (err) {
+    setError('Registration failed. Please try again.');
+    console.error('Error during teacher signup:', err);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className={styles.authContainer}>
