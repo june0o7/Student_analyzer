@@ -1,0 +1,322 @@
+/* Landing.module.css */
+:root {
+  --primary-blue: #4361ee;
+  --primary-green: #4CAF50;
+  --dark-text: #2c3e50;
+  --light-text: #7f8c8d;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f8f9fa;
+  color: var(--dark-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.content {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+/* Welcome Section */
+.welcomeSection {
+  flex: 1;
+  padding: 4rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 2rem;
+}
+
+.typewriter {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.typewriterText {
+  background: linear-gradient(90deg, #4361ee, #4cc9f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cursor {
+  margin-left: 4px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--light-text);
+  margin-bottom: 2.5rem;
+  max-width: 90%;
+  line-height: 1.7;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.featureIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(67, 97, 238, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-blue);
+}
+
+.featureItem span {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Login Section */
+.loginSection {
+  flex: 1;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.loginTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  color: var(--dark-text);
+  text-align: center;
+}
+
+.loginCard {
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  background-color: #ffffff;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.loginCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: rgba(67, 97, 238, 0.2);
+}
+
+.cardContent {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.cardLeft {
+  flex: 1;
+}
+
+.cardRight {
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lottieAnimation {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginCard h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.loginCard p {
+  color: var(--light-text);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cardButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-blue);
+  color: white;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.2);
+}
+
+.cardButtonOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  color: var(--primary-blue);
+  font-weight: 500;
+  border: 1px solid var(--primary-blue);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.buttonIcon {
+  transition: var(--transition);
+}
+
+.cardButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+}
+
+.cardButton:hover .buttonIcon {
+  transform: translateX(3px);
+}
+
+.cardButtonOutline:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .welcomeSection, .loginSection {
+    padding: 3rem;
+  }
+
+  .loginSection {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardContent {
+    flex-direction: column;
+  }
+
+  .cardRight {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .lottieAnimation {
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .welcomeSection, .loginSection {
+    padding: 2rem;
+  }
+
+  .typewriter {
+    font-size: 2rem;
+  }
+
+  .loginTitle {
+    font-size: 1.5rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cardButton, .cardButtonOutline {
+    width: 100%;
+    justify-content: center;
+  }
+}

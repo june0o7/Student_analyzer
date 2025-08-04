@@ -1,0 +1,793 @@
+/* Add these new styles to your existing Dashboard.module.css */
+:root {
+  --primary-blue: #4361ee;
+  --primary-green: #4CAF50;
+  --primary-orange: #FF9800;
+  --dark-text: #2c3e50;
+  --light-text: #7f8c8d;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+  --sidebar-width: 220px;
+  --right-sidebar-width: 280px;
+}
+
+/* Base Styles */
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerLeft h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--dark-text);
+}
+
+.headerLeft p {
+  color: var(--light-text);
+  font-size: 0.9rem;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.notificationIcon {
+  position: relative;
+  cursor: pointer;
+  color: var(--light-text);
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--primary-orange);
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profileInitial {
+  width: 36px;
+  height: 36px;
+  background-color: var(--primary-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Main Content Layout */
+.mainContent {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: white;
+  padding: 1.5rem 0;
+  border-right: 1px solid #eee;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  color: var(--light-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.navButton:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+  color: var(--primary-blue);
+}
+
+.navButton.active {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  border-left: 3px solid var(--primary-blue);
+}
+
+.navButton svg {
+  flex-shrink: 0;
+}
+
+/* Content Area Styles */
+.contentArea {
+  flex: 1;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 70px);
+}
+
+.tabContent {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+/* Quick Stats */
+.quickStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.statCard {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--box-shadow);
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statCard h3 {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  margin-bottom: 0.25rem;
+}
+
+.statCard p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+/* Chart Container */
+.chartContainer {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.chartContainer h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
+
+/* Grades Container */
+.gradesContainer {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.gradesContainer h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
+
+.gradesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.gradeCard {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #eee;
+}
+
+.gradeCard h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.gradeBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--primary-blue);
+  border-radius: 3px;
+}
+
+.gradeCard p {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+/* Assignments Container */
+.assignmentsContainer {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.assignmentsContainer h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
+
+.assignmentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.assignmentCard {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #eee;
+  transition: var(--transition);
+}
+
+.assignmentCard:hover {
+  border-color: var(--primary-blue);
+}
+
+.assignmentSubject {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.assignmentDetails {
+  flex: 1;
+}
+
+.assignmentDetails h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.assignmentDetails p {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.assignmentButton {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid var(--primary-blue);
+  color: var(--primary-blue);
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.assignmentButton:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* Right Sidebar */
+.rightSidebar {
+  width: var(--right-sidebar-width);
+  padding: 1.5rem;
+  background-color: white;
+  border-left: 1px solid #eee;
+  overflow-y: auto;
+}
+
+.announcements {
+  margin-bottom: 2rem;
+}
+
+.announcements h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
+
+.announcementCard {
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #eee;
+  margin-bottom: 0.75rem;
+}
+
+.announcementHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.announcementHeader h3 {
+  font-size: 0.95rem;
+}
+
+.announcementHeader span {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.announcementCard p {
+  font-size: 0.85rem;
+  color: var(--light-text);
+}
+
+.quickLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quickLinks h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--dark-text);
+}
+
+.quickLink {
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: var(--border-radius);
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quickLink:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .rightSidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .navButton {
+    padding: 1rem;
+    justify-content: center;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .navButton.active {
+    border-left: none;
+    border-bottom: 3px solid var(--primary-blue);
+  }
+
+  .contentArea {
+    padding: 1rem;
+  }
+
+  .quickStats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .assignmentCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .assignmentButton {
+    align-self: flex-end;
+  }
+}
+/* Profile Page Styles */
+.profileContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.profileAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4361ee, #4cc9f0);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.profileHeader h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.profileHeader p {
+  color: var(--light-text);
+}
+
+.editProfileButton {
+  margin-left: auto;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #4361ee, #4cc9f0);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editProfileButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.profileSection {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.profileSection h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--dark-text);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.infoItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.infoIcon {
+  color: var(--primary-blue);
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.infoItem h3 {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  margin-bottom: 0.25rem;
+}
+
+.infoItem p {
+  font-size: 1rem;
+  color: var(--dark-text);
+}
+
+.subjectsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.subjectBadge {
+  padding: 0.5rem 1rem;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.bioText {
+  line-height: 1.6;
+  color: var(--dark-text);
+}
+
+/* Leaderboard Styles */
+.leaderboardContainer {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+.leaderboardHeader {
+  display: grid;
+  grid-template-columns: 50px 2fr 1fr 2fr;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: var(--dark-text);
+  border-bottom: 1px solid #eee;
+}
+
+.leaderboardRow {
+  display: grid;
+  grid-template-columns: 50px 2fr 1fr 2fr;
+  padding: 1rem;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  transition: var(--transition);
+}
+
+.leaderboardRow:hover {
+  background-color: #f8f9fa;
+}
+
+.leaderboardRow.currentUser {
+  background-color: rgba(67, 97, 238, 0.05);
+  font-weight: 500;
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressContainer .progressBar {
+  flex: 1;
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressContainer span {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+/* Friends Styles */
+.friendsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.friendCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.friendInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.friendAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  position: relative;
+}
+
+.statusIndicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.statusIndicator.online {
+  background-color: var(--primary-green);
+}
+
+.statusIndicator.offline {
+  background-color: var(--light-text);
+}
+
+.friendCard h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.friendCard p {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.friendProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 200px;
+}
+
+.friendProgress .progressBar {
+  flex: 1;
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.friendProgress span {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.messageButton {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid var(--primary-blue);
+  color: var(--primary-blue);
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.messageButton:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+}
+
+.addFriendButton {
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #4361ee, #4cc9f0);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.addFriendButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Gradient enhancements for existing components */
+.statCard {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  backdrop-filter: blur(5px);
+}
+
+.gradeCard {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  backdrop-filter: blur(5px);
+}
+
+.assignmentCard {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  backdrop-filter: blur(5px);
+}

@@ -1,0 +1,335 @@
+.formContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.formHeader {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.formHeader h1 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.formHeader p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.progressBar {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.progressFill {
+  height: 6px;
+  background-color: #3498db;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progressSteps {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: -12px;
+  width: 100%;
+}
+
+.progressSteps span {
+  width: 24px;
+  height: 24px;
+  background-color: #ecf0f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #7f8c8d;
+}
+
+.progressSteps .activeStep {
+  background-color: #3498db;
+  color: white;
+}
+
+.progressLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+.form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.formStep {
+  margin-bottom: 20px;
+}
+
+.formStep h2 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.formStep h3 {
+  color: #34495e;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.required {
+  color: #e74c3c;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+}
+
+.inputWithIcon input {
+  padding-left: 35px;
+}
+
+.fileUpload {
+  margin-top: 5px;
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uploadButton:hover {
+  background-color: #ecf0f1;
+}
+
+.checkboxGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkboxItem input {
+  width: auto;
+}
+
+.checkboxItem label {
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.primaryButton, .secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primaryButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.primaryButton:hover {
+  background-color: #2980b9;
+}
+
+.secondaryButton {
+  background-color: white;
+  color: #3498db;
+  border: 1px solid #3498db;
+}
+
+.secondaryButton:hover {
+  background-color: #f8f9fa;
+}
+
+.reviewSection {
+  margin-bottom: 25px;
+}
+
+.reviewSection h3 {
+  color: #34495e;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.reviewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.reviewGrid div {
+  margin-bottom: 10px;
+}
+
+.reviewGrid label {
+  display: block;
+  font-size: 13px;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.reviewGrid p {
+  margin: 0;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.consentSection {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.successMessage h2 {
+  color: #2ecc71;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.successMessage p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .formGrid, .reviewGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .checkboxGroup {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .formHeader h1 {
+    font-size: 24px;
+  }
+  
+  .formStep h2 {
+    font-size: 20px;
+  }
+  
+  .progressLabels {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkboxGroup {
+    grid-template-columns: 1fr;
+  }
+  
+  .formActions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  
+  .primaryButton, .secondaryButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
