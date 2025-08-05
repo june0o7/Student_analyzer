@@ -3,60 +3,107 @@ import { useNavigate } from 'react-router-dom';
 import { FiBook, FiCalendar, FiAward, FiBarChart2, FiClock, FiBell, FiUser, FiUsers, FiTrendingUp } from 'react-icons/fi';
 import styles from './Sdashboard.module.css';
 import PerformanceChart from '../Dashboard/performanceChart';
-// import UpcomingClasses from './UpcomingClasses';
+import { auth, db } from '../../Firebase_Config/firebaseConfig';
+import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
   const [studentData, setStudentData] = useState({
-    name: 'Alex Johnson',
-    class: '10A',
-    email: 'alex.johnson@school.edu',
-    attendance: 92,
-    gpa: 3.7,
-    recentGrades: [
-      { subject: 'Mathematics', grade: 'A', progress: 85 },
-      { subject: 'Science', grade: 'B+', progress: 78 },
-      { subject: 'English', grade: 'A-', progress: 82 },
-      { subject: 'History', grade: 'B', progress: 75 }
-    ],
-    upcomingAssignments: [
-      { subject: 'Mathematics', task: 'Algebra Homework', due: 'Tomorrow' },
-      { subject: 'Science', task: 'Lab Report', due: 'In 2 days' },
-      { subject: 'English', task: 'Essay Draft', due: 'In 3 days' }
-    ],
-    announcements: [
-      { title: 'School Holiday', date: 'May 15', content: 'No classes next Monday' },
-      { title: 'Science Fair', date: 'May 20', content: 'Register by Friday' }
-    ],
-    leaderboard: [
-      { rank: 1, name: 'Sarah Chen', gpa: 4.0, progress: 95 },
-      { rank: 2, name: 'James Wilson', gpa: 3.9, progress: 92 },
-      { rank: 3, name: 'Alex Johnson', gpa: 3.7, progress: 89 },
-      { rank: 4, name: 'Maria Garcia', gpa: 3.5, progress: 85 },
-      { rank: 5, name: 'David Kim', gpa: 3.4, progress: 82 }
-    ],
-    friends: [
-      { name: 'James Wilson', status: 'online', progress: 92 },
-      { name: 'Maria Garcia', status: 'offline', progress: 85 },
-      { name: 'David Kim', status: 'online', progress: 82 }
-    ]
+    name: '',
+    class: '',
+    email: '',
+    studentId: '',
+    attendance: 0,
+    gpa: 0,
+    recentGrades: [],
+    upcomingAssignments: [],
+    announcements: [],
+    leaderboard: [],
+    friends: []
   });
 
   const [activeTab, setActiveTab] = useState('overview');
-  const [notifications, setNotifications] = useState(3);
+  const [notifications, setNotifications] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      console.log('Data loaded');
-    }, 1000);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is signed in
+        try {
+          // Fetch student data from Firestore
+          const studentDoc = await getDoc(doc(db, "students", user.uid));
+          
+          if (studentDoc.exists()) {
+            const data = studentDoc.data();
+            setStudentData(prev => ({
+              ...prev,
+              name: data.name || '',
+              email: data.email || '',
+              studentId: data.studentId || '',
+              // Set default values for other fields
+              class: '10A', // You might want to store this in Firestore too
+              attendance: 92,
+              gpa: 3.7,
+              recentGrades: [
+                { subject: 'Mathematics', grade: 'A', progress: 85 },
+                { subject: 'Science', grade: 'B+', progress: 78 },
+                { subject: 'English', grade: 'A-', progress: 82 },
+                { subject: 'History', grade: 'B', progress: 75 }
+              ],
+              upcomingAssignments: [
+                { subject: 'Mathematics', task: 'Algebra Homework', due: 'Tomorrow' },
+                { subject: 'Science', task: 'Lab Report', due: 'In 2 days' },
+                { subject: 'English', task: 'Essay Draft', due: 'In 3 days' }
+              ],
+              announcements: [
+                { title: 'School Holiday', date: 'May 15', content: 'No classes next Monday' },
+                { title: 'Science Fair', date: 'May 20', content: 'Register by Friday' }
+              ],
+              leaderboard: [
+                { rank: 1, name: 'Sarah Chen', gpa: 4.0, progress: 95 },
+                { rank: 2, name: 'James Wilson', gpa: 3.9, progress: 92 },
+                { rank: 3, name: data.name || 'You', gpa: 3.7, progress: 89 },
+                { rank: 4, name: 'Maria Garcia', gpa: 3.5, progress: 85 },
+                { rank: 5, name: 'David Kim', gpa: 3.4, progress: 82 }
+              ],
+              friends: [
+                { name: 'James Wilson', status: 'online', progress: 92 },
+                { name: 'Maria Garcia', status: 'offline', progress: 85 },
+                { name: 'David Kim', status: 'online', progress: 82 }
+              ]
+            }));
+          } else {
+            console.log("No student data found");
+          }
+        } catch (error) {
+          console.error("Error fetching student data:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        // User is signed out
+        navigate('/student-login');
+      }
+    });
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleProfileClick = () => {
     navigate('/student-profile');
   };
+
+  if (loading) {
+    return (
+      <div className={styles.dashboardContainer}>
+        <div className={styles.loadingContainer}>
+          <p>Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.dashboardContainer}>
@@ -218,7 +265,7 @@ const StudentDashboard = () => {
                 {studentData.leaderboard.map((student, index) => (
                   <div 
                     key={index} 
-                    className={`${styles.leaderboardRow} ${student.name === 'Alex Johnson' ? styles.currentUser : ''}`}
+                    className={`${styles.leaderboardRow} ${student.name === studentData.name ? styles.currentUser : ''}`}
                   >
                     <span>{student.rank}</span>
                     <span>{student.name}</span>
@@ -285,7 +332,7 @@ const StudentDashboard = () => {
           {activeTab === 'schedule' && (
             <div className={styles.tabContent}>
               <h2>Class Schedule</h2>
-              <UpcomingClasses />
+              <p>Schedule content would go here</p>
             </div>
           )}
 

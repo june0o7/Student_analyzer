@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiSave, FiArrowLeft, FiUpload, FiCalendar, FiUser, FiMail, FiPhone, FiBook } from 'react-icons/fi';
 import styles from './Form.module.css';
+import { auth, db, storage } from '../../Firebase_Config/firebaseConfig';
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useNavigate } from 'react-router-dom';
 
 const StudentForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -25,18 +31,69 @@ const StudentForm = () => {
     medicalConditions: '',
     allergies: '',
     previousSchool: '',
-    interests: ''
+    interests: '',
+    photoURL: ''
   });
 
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserId(user.uid);
+        // Load existing data if available
+        try {
+          const studentDoc = await getDoc(doc(db, "students", user.uid));
+          if (studentDoc.exists()) {
+            const data = studentDoc.data();
+            setFormData(prev => ({
+              ...prev,
+              firstName: data.firstName || '',
+              lastName: data.lastName || '',
+              studentId: data.studentId || '',
+              dateOfBirth: data.dateOfBirth || '',
+              gender: data.gender || '',
+              email: data.email || user.email || '',
+              phone: data.phone || '',
+              address: data.address || '',
+              city: data.city || '',
+              state: data.state || '',
+              zipCode: data.zipCode || '',
+              parentName: data.parentName || '',
+              parentEmail: data.parentEmail || '',
+              parentPhone: data.parentPhone || '',
+              emergencyContact: data.emergencyContact || '',
+              emergencyPhone: data.emergencyPhone || '',
+              classGrade: data.classGrade || '',
+              subjects: data.subjects || [],
+              medicalConditions: data.medicalConditions || '',
+              allergies: data.allergies || '',
+              previousSchool: data.previousSchool || '',
+              interests: data.interests || '',
+              photoURL: data.photoURL || ''
+            }));
+          }
+        } catch (error) {
+          console.error("Error loading student data:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        navigate('/student-login');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
     if (type === 'checkbox') {
-      // Handle checkbox array for subjects
       setFormData(prev => {
         const newSubjects = checked 
           ? [...prev.subjects, value]
@@ -52,14 +109,44 @@ const StudentForm = () => {
     setSelectedFile(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real app, you would send the data to your backend here
-    console.log('Form submitted:', formData);
-    if (selectedFile) {
-      console.log('Selected file:', selectedFile.name);
+    
+    if (!userId) {
+      console.error("No user ID available");
+      return;
     }
-    setSubmitted(true);
+
+    try {
+      setLoading(true);
+      
+      // Upload photo if selected
+      let photoURL = formData.photoURL;
+      if (selectedFile) {
+        const storageRef = ref(storage, `student-photos/${userId}/${selectedFile.name}`);
+        await uploadBytes(storageRef, selectedFile);
+        photoURL = await getDownloadURL(storageRef);
+      }
+
+      // Prepare data for Firestore
+      const studentData = {
+        ...formData,
+        photoURL,
+        name: `${formData.firstName} ${formData.lastName}`,
+        updatedAt: new Date(),
+        role: "student"
+      };
+
+      // Save to Firestore
+      await setDoc(doc(db, "students", userId), studentData, { merge: true });
+      
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Error saving student data:", error);
+      alert("There was an error saving your data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const nextStep = () => {
@@ -82,44 +169,26 @@ const StudentForm = () => {
     'Physical Education'
   ];
 
+  if (loading) {
+    return (
+      <div className={styles.formContainer}>
+        <div className={styles.loadingContainer}>
+          <p>Loading form...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (submitted) {
     return (
       <div className={styles.successMessage}>
-        <h2>Thank You!</h2>
-        <p>Your student registration form has been submitted successfully.</p>
-        <p>We'll review your information and contact you if we need any additional details.</p>
+        <h2>Profile Updated Successfully!</h2>
+        <p>Your student profile has been saved.</p>
         <button 
           className={styles.primaryButton}
-          onClick={() => {
-            setSubmitted(false);
-            setCurrentStep(1);
-            setFormData({
-              firstName: '',
-              lastName: '',
-              studentId: '',
-              dateOfBirth: '',
-              gender: '',
-              email: '',
-              phone: '',
-              address: '',
-              city: '',
-              state: '',
-              zipCode: '',
-              parentName: '',
-              parentEmail: '',
-              parentPhone: '',
-              emergencyContact: '',
-              emergencyPhone: '',
-              classGrade: '',
-              subjects: [],
-              medicalConditions: '',
-              allergies: '',
-              previousSchool: '',
-              interests: ''
-            });
-          }}
+          onClick={() => navigate('/student-profile')}
         >
-          Submit Another Form
+          View Your Profile
         </button>
       </div>
     );
@@ -128,8 +197,8 @@ const StudentForm = () => {
   return (
     <div className={styles.formContainer}>
       <div className={styles.formHeader}>
-        <h1>Student Registration Form</h1>
-        <p>Please fill out all required fields to complete your registration</p>
+        <h1>Student Profile Form</h1>
+        <p>Please fill out all required fields to complete your profile</p>
       </div>
 
       <div className={styles.progressBar}>
@@ -227,7 +296,7 @@ const StudentForm = () => {
                 <label>Upload Photo</label>
                 <div className={styles.fileUpload}>
                   <label htmlFor="photoUpload" className={styles.uploadButton}>
-                    <FiUpload /> {selectedFile ? selectedFile.name : 'Choose File'}
+                    <FiUpload /> {selectedFile ? selectedFile.name : formData.photoURL ? 'Change Photo' : 'Choose File'}
                   </label>
                   <input
                     type="file"
@@ -237,6 +306,11 @@ const StudentForm = () => {
                     style={{ display: 'none' }}
                   />
                 </div>
+                {formData.photoURL && !selectedFile && (
+                  <div className={styles.currentPhoto}>
+                    <small>Current photo is saved</small>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -633,8 +707,9 @@ const StudentForm = () => {
             <button
               type="submit"
               className={styles.primaryButton}
+              disabled={loading}
             >
-              <FiSave /> Submit Form
+              {loading ? 'Saving...' : (<><FiSave /> Save Profile</>)}
             </button>
           )}
         </div>
