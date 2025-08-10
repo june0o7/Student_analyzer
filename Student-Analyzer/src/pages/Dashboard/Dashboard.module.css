@@ -35,32 +35,18 @@ body {
   overflow: hidden;
 }
 
-/* Sidebar Styles */
+/* --- MODIFIED: Sidebar Styles for YouTube-like behavior --- */
 .sidebar {
   height: 100%;
-  width: 80px;
+  width: 220px; /* Default expanded width */
   background-color: var(--dark-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease; /* Smooth transition for width change */
   position: relative;
   z-index: 10;
-}
-
-.sidebar:hover {
-  width: 220px;
-}
-
-.sidebar:hover .menuItem {
-  justify-content: flex-start;
-  padding-left: 25px;
-}
-
-.sidebar:hover .tooltip {
-  display: inline;
-  margin-left: 15px;
 }
 
 .menuItem {
@@ -68,7 +54,8 @@ body {
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Default for expanded view */
+  padding-left: 25px; /* Default for expanded view */
   color: white;
   cursor: pointer;
   margin: 5px 0;
@@ -76,6 +63,29 @@ body {
   transition: var(--transition);
   position: relative;
 }
+
+.tooltip {
+  display: inline; /* Visible by default */
+  margin-left: 15px; /* Space between icon and text */
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* --- New styles for the collapsed state --- */
+.sidebar.collapsed {
+  width: 80px; /* Collapsed width */
+}
+
+.sidebar.collapsed .menuItem {
+  justify-content: center; /* Center icon when collapsed */
+  padding-left: 0;
+}
+
+.sidebar.collapsed .tooltip {
+  display: none; /* Hide text when collapsed */
+}
+
+/* --- REMOVED: All .sidebar:hover rules are gone --- */
 
 .menuItem:hover {
   background-color: rgba(255, 255, 255, 0.1);
@@ -85,11 +95,6 @@ body {
   background-color: var(--primary-color);
 }
 
-.tooltip {
-  display: none;
-  font-size: 14px;
-  white-space: nowrap;
-}
 
 /* Main Content Styles */
 .content {
@@ -111,6 +116,32 @@ body {
   top: 0;
   z-index: 5;
 }
+
+/* --- New Styles for Header Layout --- */
+/* .headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+} */
+
+.menuButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white; /* Changed from --dark-color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; /* Slightly increased padding */
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
+  margin-bottom: 20px; /* Added margin to push items down */
+}
+
+.menuButton:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Changed hover to match other sidebar items */
+}
+
 
 .searchBox {
   display: flex;
@@ -595,19 +626,47 @@ body {
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 60px;
-  }
+  /* No change needed for sidebar, it's already compact */
   
   .header {
     padding: 15px;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow header items to wrap on small screens */
+  }
+
+  .headerLeft {
+    flex-grow: 1; /* Allow left side to take available space */
   }
   
   .searchBox {
-    width: 200px;
+    width: 100%; /* Make search box take full width on small screens */
+    min-width: 150px;
   }
   
   .statsGrid {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+
+/* src/Dashboard/Dashboard.module.css */
+
+/* ... (add this at the end of the file) ... */
+
+/* --- NEW: Styling for the placeholder page content --- */
+.pageContent {
+  padding: 40px;
+  background-color: #f5f7fa;
+  flex: 1;
+  color: var(--dark-color);
+}
+
+.pageContent h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.pageContent p {
+  font-size: 16px;
+  color: var(--gray-color);
 }

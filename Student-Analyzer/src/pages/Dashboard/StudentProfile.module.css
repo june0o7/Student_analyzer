@@ -1,0 +1,204 @@
+:root {
+  --primary-blue: #4361ee;
+  --light-bg: #f8f9fa;
+  --content-bg: #ffffff;
+  --text-dark: #2c3e50;
+  --text-muted: #6c757d;
+  --border-color: #e9ecef;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+.profileContainer {
+  background-color: var(--light-bg);
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.profileContentWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--content-bg);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.backButton {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.backButton:hover {
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-top: 2rem; /* Space for back button */
+}
+
+.profileAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4361ee, #4cc9f0);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.profileHeader h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.profileHeader p {
+  color: var(--text-muted);
+}
+
+.editProfileButton {
+  margin-left: auto;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editProfileButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.profileSection {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.profileSection h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.infoItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.infoIcon {
+  color: var(--primary-blue);
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.infoItem h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.infoItem p {
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.subjectsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.subjectBadge {
+  padding: 0.5rem 1rem;
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-blue);
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.bioText {
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+/* Incomplete Profile Styles */
+.incompleteProfile, .loadingContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.incompleteProfile h1, .loadingContainer p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.incompleteProfile p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.completeProfileButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.completeProfileButton:hover {
+  opacity: 0.9;
+}
